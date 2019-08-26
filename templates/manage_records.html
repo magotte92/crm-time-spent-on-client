@@ -1,0 +1,12 @@
+{% load staticfiles %}
+<span><h1>Είσαι συνδεμένος ώς:</h1><h2>{{ user.username }}<h2></span>
+<form method="post">{% csrf_token %}
+    {{ formset.management_form }}
+
+    <table>
+        {{ formset.dec_name }}
+        {% for form in formset %}
+        {{ form }}
+        {% endfor %}
+    </table>
+</form>
