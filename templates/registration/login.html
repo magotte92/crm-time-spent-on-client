@@ -1,0 +1,31 @@
+{% load i18n %}
+{% load staticfiles %}
+{% trans "<!doctype" %} html>
+  <head>
+    <title>Καταγραφή ώρας</title>
+      <link rel="stylesheet" type="text/css" href="{% static 'css/bootstrap.css' %}">
+      <link rel="stylesheet" type="text/css" href="{% static 'css/login.css' %}">
+      <link rel="icon" href="{% static 'graphics/ROMVOS.png' %}">
+  </head>
+  <body class="text-center">
+    {% if error %}
+    {{ error }}
+    {% endif %}
+    <form class="form-signin" method="post">
+      {% csrf_token %}
+      <img class="mb-4" src="{% static 'graphics/ROMVOS.png' %}" alt="" width="72" height="72">
+      <h1 class="h3 mb-3 font-weight-normal">Είσοδος στο σύστημα</h1>
+      {{ form.as_p }}
+    <label>
+      <input type="checkbox" value="remember-me"> Να με θυμάσαι
+    </label>
+  <button class="btn btn-lg btn-primary btn-block" type="submit">Είσοδος</button>
+  <p class="mt-5 mb-3 text-muted">&copy; Gkatziaris Pantelis 2019</p>
+</form>
+</body>
+<script src="{% static 'javascript/dashboard.js' %}"></script>
+<script src="{% static 'javascript/bootstrap.js' %}"></script>
+<script src="{% static 'javascript/jquery.js' %}"></script>
+<script src="{% static 'javascript/popper.min.js' %}"></script>
+<script src="{% static 'javascript/Chart.bundle.js' %}"></script>
+</html>

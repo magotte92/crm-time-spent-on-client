@@ -1,12 +1,34 @@
 {% load staticfiles %}
-<span><h1>Είσαι συνδεμένος ώς:</h1><h2>{{ user.username }}<h2></span>
-<form method="post">{% csrf_token %}
-    {{ formset.management_form }}
+<head>
+  <title>Καταγραφή χρόνου</title>
+  <link rel="stylesheet" type="text/css" href="{% static 'css/manage_records.css' %}">
+  <link rel="stylesheet" type="text/css" href="{% static 'css/bootstrap.css' %}">
 
-    <table>
-        {{ formset.dec_name }}
-        {% for form in formset %}
-        {{ form }}
-        {% endfor %}
-    </table>
-</form>
+</head>
+<body>
+  <form action='/accounts/logout' method='GET'>
+    <button class="btn btn-lg btn-primary btn-block" id="btn" type="submit">Αποσύνδεση</button>
+  </form>
+
+
+  <h2>Είσαι συνδεμένος ώς: <span id="usersname">{{ user.username }}</span></h2>
+
+  <form method="POST" id="former">
+
+      {% csrf_token %}
+      {{ form.as_table }}
+      <input type="submit" name="trecker" value="test">
+  </form>
+
+</body>
+  {% block footer %}
+  <script type="text/javascript" src="{% static 'admin/js/vendor/jquery/jquery.js' %}"></script>
+  <script src="{% static 'javascript/manage_records.js' %}"></script>
+  <script src="{% static 'javascript/bootstrap.js' %}"></script>
+  <script src="{% static 'javascript/jquery.js' %}"></script>
+  <script src="{% static 'javascript/popper.min.js' %}"></script>
+  <script src="{% static 'javascript/Chart.bundle.js' %}"></script>
+
+
+  {{ form.media }}
+  {% endblock %}

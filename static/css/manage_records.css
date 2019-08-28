@@ -1,0 +1,47 @@
+#id_name {
+  margin-top: 2rem;
+  margin-left: 1rem;
+}
+
+#id_reason {
+  margin-top: 2rem;
+  margin-left: 1rem;
+  width: 7rem;
+}
+
+#id_time_spent {
+    margin-top: 2rem;
+    margin-left: 1.2rem;
+    width: 3rem;
+}
+
+#former {
+  margin-top: 2rem;
+  text-align: center;
+}
+
+span#usersname {
+  text-align: right;
+  color: steelblue;
+  text-align: center;
+
+}
+
+#btn {
+  width: 10rem;
+  text-align: center;
+  position: absolute;
+  right: 1rem;
+  top: 10px;
+  width: 300px;
+  padding: 10px;
+}
+
+h2 {
+  padding:10px;
+}
+
+label {
+  margin: auto;
+  font-family: Helvetica;
+}

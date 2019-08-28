@@ -1,14 +1,14 @@
-from django.forms import ModelForm
+from django import forms
 from django.shortcuts import render
-from .models import ClientModel
-from django.forms.models import modelformset_factory
+from .models import ClientModel, Clientele
+from dal import autocomplete
 
-class PushTask(ModelForm):
-
+class PushTask(forms.ModelForm):
+    name = forms.ModelChoiceField(Clientele.objects.all())
     class Meta(object):
         """docstring for Meta."""
         model = ClientModel
         fields = ['name', 'reason', 'time_spent']
-
-
-PushTaskFormSet = modelformset_factory(ClientModel, form=PushTask)
+        widgets = {
+            'name': autocomplete.ModelSelect2(url='name-autocomplete'),
+        }
