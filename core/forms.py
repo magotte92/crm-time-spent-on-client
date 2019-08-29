@@ -4,7 +4,7 @@ from .models import ClientModel, Clientele
 from dal import autocomplete
 
 class PushTask(forms.ModelForm):
-    name = forms.ModelChoiceField(Clientele.objects.all())
+    # name = forms.ModelChoiceField(Clientele.objects.all())
     class Meta(object):
         """docstring for Meta."""
         model = ClientModel

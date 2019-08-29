@@ -1,4 +1,5 @@
 from django.shortcuts import render, redirect
+from django.core.paginator import Paginator
 from django.views.generic import View, CreateView
 from .forms import PushTask
 from .models import ClientModel, Clientele
@@ -9,19 +10,19 @@ from django.urls import reverse_lazy
 from dal import autocomplete
 
 
-
 class ClientAutocomplete(autocomplete.Select2QuerySetView):
     def get_queryset(self):
         # Don't forget to filter out results depending on the visitor !
-        if not self.request.user.is_authenticated():
-            return PushTask.reason.none()
+        if not self.request.user.is_authenticated:
+            return Clientele.objects.none()
 
-        qs = PushTask.objects.values_list('name', flat=True)
-
+        # qs = Clientele.objects.values_list('name', flat=True)
+        qs = Clientele.objects.all()
         if self.q:
-            qs = qs.filter(name__istartswith=self.q)
+            qs = qs.filter(name__istartswith=self.q.upper()).order_by('-name')
 
         return qs
+
 
 
 class RecordView(LoginRequiredMixin, View):

@@ -11,7 +11,7 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 SECRET_KEY = '^ki%@qh9u1s$s+*&#@j^tsp!&9)(dy7z@pmzet8&b-^@zud)6)'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = False
+DEBUG = True
 
 ALLOWED_HOSTS = ['*']
 
@@ -29,6 +29,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'core',
+    # 'csv_upload_app', activate only when I want to upload 
 ]
 
 MIDDLEWARE = [

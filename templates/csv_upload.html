@@ -1,0 +1,16 @@
+{% if messages %}
+    {% for message in messages %}
+        <div>
+            <strong>{{ message|safe }}</strong>
+        </div>
+    {% endfor %}
+{% else %}
+    {{ order }}
+    <form method="post" enctype="multipart/form-data">
+    {% csrf_token %}
+    <label>Επιλογή αρχείου</label>
+    <input type="file" name="file">
+    <p>Το πρόγραμμα δέχεται μόνο csv</p>
+    <button type="submit">Ανέβασμα</button>
+    </form>
+{% endif %}
