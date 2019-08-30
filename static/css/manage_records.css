@@ -1,23 +1,28 @@
+body {
+
+}
+
 #id_name {
-  margin-top: 2rem;
+  margin: auto;
   margin-left: 1rem;
 }
 
 #id_reason {
-  margin-top: 2rem;
-  margin-left: 1rem;
-  width: 7rem;
+  margin: auto;
+  width: 10rem;
 }
 
 #id_time_spent {
-    margin-top: 2rem;
-    margin-left: 1.2rem;
-    width: 3rem;
+    margin: auto;
+    width: 6rem  ;
 }
 
 #former {
-  margin-top: 2rem;
+  margin-top: 10rem;
+  margin-left: 2rem;
+  margin-right: 2rem;
   text-align: center;
+  padding: auto;
 }
 
 span#usersname {

@@ -1,14 +1,11 @@
 from django.shortcuts import render, redirect
 from django.core.paginator import Paginator
-from django.views.generic import View, CreateView
+from django.views.generic import View
 from .forms import PushTask
-from .models import ClientModel, Clientele
-from django.shortcuts import render_to_response
-from django.contrib.auth import logout
+from .models import Clientele
 from django.contrib.auth.mixins import LoginRequiredMixin
-from django.urls import reverse_lazy
 from dal import autocomplete
-
+from django.contrib.auth import logout
 
 class ClientAutocomplete(autocomplete.Select2QuerySetView):
     def get_queryset(self):
@@ -28,8 +25,8 @@ class ClientAutocomplete(autocomplete.Select2QuerySetView):
 class RecordView(LoginRequiredMixin, View):
     template_name = 'manage_records.html'
     username = ''
+
     def get(self, request):
-        print('I got the form ')
         form = PushTask()
         return render(request, self.template_name, {'form': form})
 
@@ -37,9 +34,7 @@ class RecordView(LoginRequiredMixin, View):
     def post(self, request):
 
         if request.user.is_authenticated:
-            print('prepost')
             form = PushTask(request.POST)
-            print('I\'m in post function')
             if form.is_valid():
                 profile = form.save(commit=False)
                 # profile.ip_address = request.META['REMOTE_ADDR']

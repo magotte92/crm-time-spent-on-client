@@ -29,7 +29,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'core',
-    # 'csv_upload_app', activate only when I want to upload 
+    # 'csv_upload_app', activate only when I want to upload
 ]
 
 MIDDLEWARE = [
@@ -110,6 +110,6 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/2.2/howto/static-files/
 LOGIN_REDIRECT_URL = '/recorder/'
-LOGIN_URL = '/accounts/login'
+LOGIN_URL = '/accounts/login/'
 STATICFILES_DIRS = [os.path.join(BASE_DIR, 'static')]
 STATIC_URL = '/static/'

@@ -3,11 +3,10 @@
   <title>Καταγραφή χρόνου</title>
   <link rel="stylesheet" type="text/css" href="{% static 'css/manage_records.css' %}">
   <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
-
+  <link rel="icon" href="{% static 'graphics/ROMVOS.png' %}">
 </head>
-<body>
   <form action='/accounts/logout' method='GET'>
-    <button class="btn btn-lg btn-primary btn-block" id="btn" type="submit">Αποσύνδεση</button>
+    <button class="btn btn-lg btn-primary" id="btn" type="submit">Αποσύνδεση</button>
   </form>
 
 
@@ -17,10 +16,22 @@
 
       {% csrf_token %}
       {{ form.as_table }}
-      <input type="submit" name="trecker" value="test">
-  </form>
+      <input class="btn btn-sm btn-success" type="submit" id='btn2' value="Καταγραφή">
+      <script type="text/javascript">
+          var div = document.getElementsByTagName('label');
+          for (var node of div){
+              if(node.textContent == 'Name:')
+                  node.textContent = 'Επωνυμία:';
+              else if (node.textContent == 'Reason:') {
+                  node.textContent = 'Υπηρεσία:';
+              }
+              else if (node.textContent == 'Time spent:') {
+                  node.textContent = 'Χρόνος:';
+              }
+          }
 
-</body>
+      </script>
+  </form>
   {% block footer %}
   <script type="text/javascript" src="{% static 'admin/js/vendor/jquery/jquery.js' %}"></script>
   <script src="{% static 'javascript/manage_records.js' %}"></script>

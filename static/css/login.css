@@ -1,20 +1,23 @@
-.bd-placeholder-img {
-        font-size: 1.125rem;
-        text-anchor: middle;
-        -webkit-user-select: none;
-        -moz-user-select: none;
-        -ms-user-select: none;
-        user-select: none;
-      }
-
-      @media (min-width: 768px) {
-        .bd-placeholder-img-lg {
-          font-size: 3.5rem;
-        }
-      }
-
 .form-signin{
-    margin-top: 10rem;
-    margin-left: 30rem;
-    margin-right: 30rem;
+    margin:auto;
+    padding: 10rem;
+}
+
+.btn {
+    width: 10rem;
+    padding: 1rem;
+    margin:inherit;
+
+}
+
+#id_username {
+    padding: 0.5;
+    margin-left: 1rem;
+    margin-top: 1rem;
+}
+
+#id_password {
+    padding: 0.5;
+    margin-left: 2rem;
+    margin-top: 2rem;
 }
