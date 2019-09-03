@@ -22,13 +22,13 @@ def clientele_upload(request, **kwargs):
     if not csv_file.name.endswith('.csv'):
         messages.error(request, 'This is not a csv File!')
 
-    data_set = csv_file.read().decode('1253')
+    data_set = csv_file.read().decode('utf8')
     io_string = io.StringIO(data_set)
     next(io_string)
     for col in csv.reader(io_string, delimiter=';', quotechar='|'):
         _, created = Clientele.objects.update_or_create(
             Aa=int(col[0]),
-            name=col[1],
+            name=str(col[1]).replace('"', '').replace('/', ''),
             )
     context = {}
     return render(request, template, context)

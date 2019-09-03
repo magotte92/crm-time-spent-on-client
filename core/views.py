@@ -2,10 +2,13 @@ from django.shortcuts import render, redirect
 from django.core.paginator import Paginator
 from django.views.generic import View
 from .forms import PushTask
-from .models import Clientele
+from .models import *
 from django.contrib.auth.mixins import LoginRequiredMixin
 from dal import autocomplete
 from django.contrib.auth import logout
+import json
+from django.http import HttpResponse
+
 
 class ClientAutocomplete(autocomplete.Select2QuerySetView):
     def get_queryset(self):
@@ -19,7 +22,6 @@ class ClientAutocomplete(autocomplete.Select2QuerySetView):
             qs = qs.filter(name__istartswith=self.q.upper()).order_by('-name')
 
         return qs
-
 
 
 class RecordView(LoginRequiredMixin, View):
@@ -39,6 +41,7 @@ class RecordView(LoginRequiredMixin, View):
                 profile = form.save(commit=False)
                 # profile.ip_address = request.META['REMOTE_ADDR']
                 profile.dec_name = request.user
+                profile.task = profile.subtask.mother_task
                 profile.save()
                 return redirect('recorder')
             print('Prob Not')

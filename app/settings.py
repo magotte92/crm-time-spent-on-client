@@ -29,7 +29,8 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'core',
-    # 'csv_upload_app', activate only when I want to upload
+    'rest_framework',
+    'csv_upload_app', #activate only when I want to upload
 ]
 
 MIDDLEWARE = [
