@@ -17,7 +17,7 @@ class ClientAutocomplete(autocomplete.Select2QuerySetView):
             return Clientele.objects.none()
 
         # qs = Clientele.objects.values_list('name', flat=True)
-        qs = Clientele.objects.all()
+        qs = Clientele.objects.all().order_by('name')
         if self.q:
             qs = qs.filter(name__istartswith=self.q.upper()).order_by('-name')
 

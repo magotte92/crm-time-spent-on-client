@@ -1,0 +1,44 @@
+{% load staticfiles %}
+<head>
+
+
+<link href="//netdna.bootstrapcdn.com/bootstrap/3.1.0/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
+<script src="//netdna.bootstrapcdn.com/bootstrap/3.1.0/js/bootstrap.min.js"></script>
+<script src="//code.jquery.com/jquery-1.11.1.min.js"></script>
+<link rel="stylesheet" type="text/css" href="{% static 'css/all_clients.css' %}">
+<script type="text/javascript" src="{% static 'javascript/all_clients.js' %}"></script>
+</head>
+<div class="container">
+    <div class="row">
+        <div class="panel panel-primary filterable">
+            <div class="panel-heading">
+                <h3 class="panel-title">Εταιρίες</h3>
+                <div class="pull-right">
+                    <button class="btn btn-default btn-xs btn-filter"><span class="glyphicon glyphicon-filter"></span> Φίλτρο</button>
+                </div>
+            </div>
+            <table class="table">
+
+                <thead>
+                    <tr class="filters">
+                        <th><input type="text" class="form-control" placeholder="Επωνυμία" disabled></th>
+                        <th><input type="text" class="form-control" placeholder="Κατηγορία" disabled></th>
+                        <th><input type="text" class="form-control" placeholder="Αιτία" disabled></th>
+                        <th><input type="text" class="form-control" placeholder="Χρόνος" disabled></th>
+
+                    </tr>
+                </thead>
+                <tbody>
+                  {% for name, task, subtask, time_spent in df %}
+                  <tr>
+                    <td>{{ name }}</td>
+                    <td>{{ task }}</td>
+                    <td>{{ subtask }}</td>
+                    <td>{{ time_spent }}</td>
+                  </tr>
+                  {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
