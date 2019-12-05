@@ -1,4 +1,33 @@
 $(document).ready(function(){
+  $(".fa .fa-calendar").on("span", function() {
+    var from = stringToDate($("#date_range_delos").split(' - ')[0]);
+    var to = stringToDate($("#date_range_delos").split(' - ')[1]);
+
+    });
+    $(function() {
+      var start = moment().subtract(29, 'days');
+      var end = moment();
+
+    function cb(start, end) {
+      $('#reportrange #date_range_delos').html(start.format('D/M/YYYY') + ' - ' + end.format('D/M/YYYY'));
+      }
+
+    $('#reportrange').daterangepicker({
+      startDate: start,
+      endDate: end,
+      ranges: {
+        'Σήμερα': [moment(), moment()],
+        'Χθές': [moment().subtract(1, 'days'), moment().subtract(1, 'days')],
+        'Τελευταίες 7 μέρες': [moment().subtract(6, 'days'), moment()],
+        'Τελευταίες 30 μέρες': [moment().subtract(29, 'days'), moment()],
+        'Αυτόν τον μήνα': [moment().startOf('month'), moment().endOf('month')],
+        'Προηγούμενος μήνας': [moment().subtract(1, 'month').startOf('month'), moment().subtract(1, 'month').endOf('month')]
+        }
+      }, cb);
+
+      cb(start, end);
+
+    });
     $('.filterable .btn-filter').click(function(){
         var $panel = $(this).parents('.filterable'),
         $filters = $panel.find('.filters input'),
@@ -39,4 +68,5 @@ $(document).ready(function(){
             $table.find('tbody').prepend($('<tr class="no-result text-center"><td colspan="'+ $table.find('.filters th').length +'">No result found</td></tr>'));
         }
     });
+
 });

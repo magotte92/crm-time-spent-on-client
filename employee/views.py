@@ -6,6 +6,7 @@ from django.contrib.auth.decorators import login_required
 from django.utils.decorators import method_decorator
 import datetime
 
+
 def make_all_client():
     qs = list(ClientModel.objects.values_list('name__name', 'task__task', 'subtask__subtask', 'time_spent'))
     df = pd.DataFrame(qs, columns=['name', 'task', 'subtask', 'time_spent'])
@@ -30,6 +31,7 @@ class AllClientsPageView(TemplateView):
         context.update({'df': all_clients.values})
         return context
 
+
 def make_all_employee():
     qs = list(ClientModel.objects.values_list('dec_name',
                                               'time_spent', 'date_added'))
@@ -52,13 +54,14 @@ class EmployeeTabPageView(TemplateView):
         context = super(EmployeeTabPageView, self).get_context_data(**kwargs)
 
         make_all_employee()
-        employees = pd.read_csv('stuff/employees.csv', sep=';')
-
+        today = datetime.date.today()
         employees = pd.read_csv('stuff/employees.csv', sep=';')
         employees = employees.groupby(['dec_name', 'date_added']).sum().sum(level=['dec_name', 'date_added']).fillna(0).reset_index()
         employees['time_spent'] = pd.to_datetime(employees.time_spent, unit='m').dt.strftime('%H:%M')
+        date_split = employees['date_added'].str.split('-')
+        employees['date_added'] = date_split.str[-1] + '/' + date_split.str[1] + '/' + date_split.str[0]
         context.update({'df': employees.values})
-        
+
         return context
 
 
@@ -78,7 +81,7 @@ class SumOfClientView(TemplateView):
         all_clients = all_clients.groupby(['name']).sum().sum(level=['name']).fillna(0).reset_index()
         all_clients['time_spent'] = pd.to_timedelta(all_clients.time_spent, unit='m')
         all_clients = all_clients.sort_values(by='time_spent', ascending=False)
-        
+
         context.update({'df': all_clients.values})
         return context
 
@@ -101,7 +104,7 @@ class AllEmployeesPage(TemplateView):
 
         make_all_employees()
         all_clients = pd.read_csv('stuff/all_employees.csv', sep=';')
-        
+
         all_clients = all_clients.groupby(['name', 'task', 'subtask']).sum().sum(level=['name', 'task', 'subtask']).fillna(0).reset_index()
         all_clients['time_spent'] = pd.to_timedelta(all_clients.time_spent, unit='m')
 
@@ -128,7 +131,7 @@ class AllTaskPage(TemplateView):
         averize = all_clients.groupby(['task', 'subtask']).mean().mean(level=['task', 'subtask']).fillna(0).reset_index()
         minimize = all_clients.groupby(['task', 'subtask']).min().min(level=['task', 'subtask']).fillna(0).reset_index()
         maximize = all_clients.groupby(['task', 'subtask']).max().max(level=['task', 'subtask']).fillna(0).reset_index()
-        
+
         synolo['task'] = summarize['task']
         synolo['subtask'] = summarize['subtask']
         synolo['summarize'] = pd.to_timedelta(summarize.time_spent, unit='m')
@@ -138,4 +141,58 @@ class AllTaskPage(TemplateView):
         synolo = synolo.drop(columns='summarize')
         synolo = synolo.sort_values(by='task', ascending=False)
         context.update({'df': synolo.values})
+        return context
+
+
+class AntonPage(TemplateView):
+    template_name = 'anton.html'
+
+    @method_decorator(login_required)
+    def dispatch(self, *args, **kwargs):
+        return super().dispatch(*args, **kwargs)
+
+    def get_context_data(self, **kwargs):
+        context = super(AntonPage, self).get_context_data(**kwargs)
+        qs = ClientModel.objects.values_list('task__task', 'subtask__subtask', 'time_spent', 'date_added', 'dec_name')
+        date_start = datetime.date.today()
+        date_end = datetime.date.today()
+        data = qs.filter(date_added__gte=date_start).filter(date_added__lte=date_end).order_by('-date_added', 'dec_name')
+        context.update({'qs': qs, 'start': date_start, 'end': date_end})
+        return context
+
+
+class TimeBasedPage(TemplateView):
+    template_name = 'timer.html'
+
+    @method_decorator(login_required)
+    def dispatch(self, *args, **kwargs):
+        return super().dispatch(*args, **kwargs)
+
+    def get_context_data(self, **kwargs):
+        context = super(TimeBasedPage, self).get_context_data(**kwargs)
+
+        qs = ClientModel.objects.values_list('task__task', 'subtask__subtask', 'time_spent', 'date_added', 'dec_name')
+        date_start = datetime.date.today()
+        date_end = datetime.date.today()
+
+        data = qs.filter(date_added__gte=date_start).filter(date_added__lte=date_end).order_by('-date_added', 'dec_name')
+        context.update({'qs': qs, 'start': date_start, 'end': date_end})
+        return context
+
+
+class ExportAllPageView(TemplateView):
+    template_name = 'base.html'
+
+    @method_decorator(login_required)
+    def dispatch(self, *args, **kwargs):
+        return super().dispatch(*args, **kwargs)
+
+    def get_context_data(self, **kwargs):
+        context = super(ExportAllPageView, self).get_context_data(**kwargs)
+
+        qs = list(ClientModel.objects.values_list('name__name', 'task__task', 'subtask__subtask', 'time_spent', 'date_added'))
+        df = pd.DataFrame(qs, columns=['name', 'task', 'subtask', 'time_spent', 'date_added'])
+        df.to_csv('stuff/export_them_all.csv', sep=';', index=None)
+
+        context.update({'df': df.values})
         return context
