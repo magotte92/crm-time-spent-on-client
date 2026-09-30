@@ -1,9 +1,11 @@
-Django>=2.2.8
-django-autocomplete-light>=3.4.1,>3.5.0
-djangorestframework>=3.10.2,<3.11
-pytz==2019.2
-sqlparse==0.3.0
-six==1.12.0
-numpy>=1.17.2,<1.18.0
-pandas>=0.25.1,<0.26.0
-python-dateutil>=2.8.0,2.9.0
+# Python 3.12. Direct dependencies, pinned to current stable releases.
+Django==5.2.17
+django-autocomplete-light==5.0.0
+djangorestframework==3.18.1
+numpy==2.5.3
+pandas==3.0.6
+python-dateutil==2.9.0.post0
+python-dotenv==1.2.3
+pytz==2026.4
+six==1.17.0
+sqlparse==0.6.0

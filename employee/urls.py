@@ -1,5 +1,4 @@
 from django.urls import path
-from django.conf.urls import url
 from .views import AllClientsPageView, EmployeeTabPageView, SumOfClientView, AllEmployeesPage, AllTaskPage, AntonPage, TimeBasedPage, ExportAllPageView
 from django.contrib.auth.decorators import permission_required
 

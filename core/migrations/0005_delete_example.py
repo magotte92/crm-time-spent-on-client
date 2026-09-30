@@ -9,8 +9,7 @@ class Migration(migrations.Migration):
         ('core', '0004_example'),
     ]
 
+    # 0005_auto_20190904_1022 also deletes Example. A second DeleteModel
+    # fails on a new database, so this historical migration is a no-op.
     operations = [
-        migrations.DeleteModel(
-            name='Example',
-        ),
     ]
