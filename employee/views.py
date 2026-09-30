@@ -25,7 +25,7 @@ class AllClientsPageView(TemplateView):
 
         make_all_client()
         all_clients = pd.read_csv('stuff/all.csv', sep=';')
-        all_clients = all_clients.groupby(['name', 'task', 'subtask']).sum().sum(level=['name', 'task', 'subtask']).fillna(0).reset_index()
+        all_clients = all_clients.groupby(['name', 'task', 'subtask'], as_index=False).sum(numeric_only=True).fillna(0)
         all_clients['time_spent'] = pd.to_timedelta(all_clients.time_spent, unit='m')
 
         context.update({'df': all_clients.values})
@@ -56,7 +56,7 @@ class EmployeeTabPageView(TemplateView):
         make_all_employee()
         today = datetime.date.today()
         employees = pd.read_csv('stuff/employees.csv', sep=';')
-        employees = employees.groupby(['dec_name', 'date_added']).sum().sum(level=['dec_name', 'date_added']).fillna(0).reset_index()
+        employees = employees.groupby(['dec_name', 'date_added'], as_index=False).sum(numeric_only=True).fillna(0)
         employees['time_spent'] = pd.to_datetime(employees.time_spent, unit='m').dt.strftime('%H:%M')
         date_split = employees['date_added'].str.split('-')
         employees['date_added'] = date_split.str[-1] + '/' + date_split.str[1] + '/' + date_split.str[0]
@@ -78,7 +78,7 @@ class SumOfClientView(TemplateView):
         all_clients = pd.read_csv('stuff/all.csv', sep=';')
 
         all_clients = all_clients.drop(columns=['task', 'subtask'])
-        all_clients = all_clients.groupby(['name']).sum().sum(level=['name']).fillna(0).reset_index()
+        all_clients = all_clients.groupby(['name'], as_index=False).sum(numeric_only=True).fillna(0)
         all_clients['time_spent'] = pd.to_timedelta(all_clients.time_spent, unit='m')
         all_clients = all_clients.sort_values(by='time_spent', ascending=False)
 
@@ -105,7 +105,7 @@ class AllEmployeesPage(TemplateView):
         make_all_employees()
         all_clients = pd.read_csv('stuff/all_employees.csv', sep=';')
 
-        all_clients = all_clients.groupby(['name', 'task', 'subtask']).sum().sum(level=['name', 'task', 'subtask']).fillna(0).reset_index()
+        all_clients = all_clients.groupby(['name', 'task', 'subtask'], as_index=False).sum(numeric_only=True).fillna(0)
         all_clients['time_spent'] = pd.to_timedelta(all_clients.time_spent, unit='m')
 
         context.update({'df': all_clients.values})
@@ -127,10 +127,10 @@ class AllTaskPage(TemplateView):
         synolo = pd.DataFrame()
         all_clients = pd.read_csv('stuff/all.csv', sep=';')
         all_clients = all_clients.drop(columns=['name'])
-        summarize = all_clients.groupby(['task', 'subtask']).sum().sum(level=['task', 'subtask']).fillna(0).reset_index()
-        averize = all_clients.groupby(['task', 'subtask']).mean().mean(level=['task', 'subtask']).fillna(0).reset_index()
-        minimize = all_clients.groupby(['task', 'subtask']).min().min(level=['task', 'subtask']).fillna(0).reset_index()
-        maximize = all_clients.groupby(['task', 'subtask']).max().max(level=['task', 'subtask']).fillna(0).reset_index()
+        summarize = all_clients.groupby(['task', 'subtask'], as_index=False).sum(numeric_only=True).fillna(0)
+        averize = all_clients.groupby(['task', 'subtask'], as_index=False).mean(numeric_only=True).fillna(0)
+        minimize = all_clients.groupby(['task', 'subtask'], as_index=False).min(numeric_only=True).fillna(0)
+        maximize = all_clients.groupby(['task', 'subtask'], as_index=False).max(numeric_only=True).fillna(0)
 
         synolo['task'] = summarize['task']
         synolo['subtask'] = summarize['subtask']

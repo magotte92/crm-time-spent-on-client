@@ -1,11 +1,12 @@
-{% load staticfiles %}
+{% load static %}
 <head>
   <title>Καταγραφή χρόνου</title>
   <link rel="stylesheet" type="text/css" href="{% static 'css/manage_records.css' %}">
   <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
   <link rel="icon" href="{% static 'graphics/ROMVOS.png' %}">
 </head>
-  <form action='/accounts/logout' method='GET'>
+  <form action="{% url 'logout' %}" method="post">
+    {% csrf_token %}
     <button class="btn btn-lg btn-primary" id="btn" type="submit">Αποσύνδεση</button>
   </form>
 

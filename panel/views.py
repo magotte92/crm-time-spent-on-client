@@ -20,7 +20,7 @@ class PanelPageView(LoginRequiredMixin, TemplateView):
         df = pd.DataFrame(qs, columns=['name', 'task', 'subtask', 'time_spent'])
         df.to_csv('./media/recent.csv', sep=';', index=None)
         df = pd.read_csv('./media/recent.csv', sep=';')
-        df = df.groupby(['name', 'task', 'subtask']).sum().sum(level=['name', 'task', 'subtask']).fillna(0).reset_index()
+        df = df.groupby(['name', 'task', 'subtask'], as_index=False).sum(numeric_only=True).fillna(0)
         df['time_spent'] = pd.to_datetime(df.time_spent, unit='m').dt.strftime('%H:%M')
         df = df.sort_values(by=['name', 'time_spent'])
         context.update({'df': df.values})
